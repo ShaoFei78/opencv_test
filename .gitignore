@@ -1,0 +1,19 @@
+# 编译产物
+*.exe
+*.o
+*.obj
+*.ilk
+*.pdb
+*.dll
+*.a
+*.so
+build/
+out/
+
+# 程序运行时生成的图片
+output.png
+result.png
+
+# 编辑器/系统
+Thumbs.db
+Desktop.ini

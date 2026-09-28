@@ -1,0 +1,31 @@
+{
+    "version": 4,
+    "configurations": [
+        {
+            "name": "OpenCV-MinGW64",
+            "compilerPath": "C:/Program Files/mingw64/bin/g++.exe",
+            "compilerArgs": [
+                "-std=c++17"
+            ],
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "windows-gcc-x64",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "D:/Program Files/OpenCV4.11_mingw13.1.0/include"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "browse": {
+                "path": [
+                    "${workspaceFolder}",
+                    "D:/Program Files/OpenCV4.11_mingw13.1.0/include"
+                ],
+                "limitSymbolsToIncludedHeaders": true
+            }
+        }
+    ]
+}

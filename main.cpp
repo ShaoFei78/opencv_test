@@ -27,15 +27,40 @@ void onTrackbar(int, void*) {
     vector<Vec3f> circles;
     HoughCircles(g_blurred, circles, HOUGH_GRADIENT,
                  1, g_minDist, g_param1, g_param2, g_minRadius, g_maxRadius);
-
-    for (size_t i = 0; i < circles.size(); i++) {
+    // 按半径从大到小排序
+    sort(circles.begin(), circles.end(), [](const Vec3f& a, const Vec3f& b) {
+        return a[2] > b[2];  
+    });
+    //绘制圆和文字
+    Scalar textColor;
+    double fontScale;
+    int thickness;
+    for (size_t i=0;i<circles.size();i++){
         Point center(cvRound(circles[i][0]), cvRound(circles[i][1]));
         int radius = cvRound(circles[i][2]);
         circle(g_result, center, radius, Scalar(255, 0, 0), 3);
         circle(g_result, center, 3, Scalar(0, 0, 255), -1);
-    }
+        bool isPlate = (i==0);
+        string text =(isPlate)?"plate":"cookie";
+        if (isPlate) {
+            textColor = Scalar(0, 165, 255); 
+            fontScale = radius / 150.0;       
+            thickness = max(2, (int)(fontScale * 2));
+        } else {
+            textColor = Scalar(0, 255, 0);   
+            fontScale = radius / 100.0;      
+            thickness = max(1, (int)(fontScale * 2));
+        }
 
-    
+        int baseline=0;
+        Size textSize=getTextSize(text,FONT_HERSHEY_SIMPLEX,fontScale,thickness,&baseline);
+        int x=center.x-textSize.width/2;
+        int y=center.y+textSize.height/2;
+        if (isPlate) {
+            y -= (radius-35);
+        }
+        putText(g_result,text,Point(x,y),FONT_HERSHEY_SIMPLEX,fontScale,textColor,thickness);
+    }    
     putText(g_result, "circles: " + to_string(circles.size()), Point(20, 40),
             FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 255, 0), 2);
 
